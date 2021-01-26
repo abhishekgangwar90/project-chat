@@ -1,8 +1,23 @@
 import { sendMessage } from './../utils/socket.js';
+import {fetchLocation} from './../utils/location.js'
 
 
-function handleInputEvents(){
+function handleMessageBotEvents(message){
+    switch(message){
+        case '@location':{
+            fetchLocation()
+            .then((res) =>{
+                sendMessage(res)
+            }).catch((err) =>{
+                console.log('unable to fetch location')
+            })
+            break;
+        }
 
+
+        default:
+        return null;
+    }
 }
 
 export function registerEventListeners(){
@@ -10,6 +25,7 @@ export function registerEventListeners(){
     const $input = document.querySelector('#input');
     const $sendMessageButton = document.querySelector('#send-button');
 
+    const botEvents = ['@location']
 
     function sendMessageToServer(e){
         e.preventDefault()
@@ -17,8 +33,12 @@ export function registerEventListeners(){
         if(!message){
             return
         }
-        sendMessage(message);
-        $input.value = ''    
+        $input.value = ''
+        if(botEvents.indexOf(message) !== -1){
+            return handleMessageBotEvents(message)
+        }
+        sendMessage(message)
+            
     }
 
 
