@@ -1,9 +1,17 @@
-const {server, socket} = require('./app');
+const {server, io} = require('./app');
 const port = process.env.PORT;
 
 
-socket.on('connection',() =>{
-    console.log('client Connected')
+io.on('connection',(socket) =>{
+    console.log('New web-socket connection created')
+
+    socket.emit('message','Welcome to the chat app')
+
+    socket.on('onSendMessage', (message)=>{
+        io.emit('message', message);
+    })
+
+
 })
 
 server.listen(port, () =>{
