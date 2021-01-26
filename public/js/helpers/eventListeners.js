@@ -1,4 +1,9 @@
-import { sendMessage } from './../utils/socket.js'
+import { sendMessage } from './../utils/socket.js';
+
+
+function handleInputEvents(){
+
+}
 
 export function registerEventListeners(){
     const $form = document.querySelector('#form')
