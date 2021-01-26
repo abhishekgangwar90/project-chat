@@ -5,7 +5,10 @@ const port = process.env.PORT;
 io.on('connection',(socket) =>{
     console.log('New web-socket connection created')
 
-    socket.emit('message','Welcome to the chat app')
+    socket.emit('message',{
+        type: 'message',
+        message: 'Welcome to Chat App!!'
+    })
 
     socket.on('onSendMessage', (message)=>{
         io.emit('message', message);

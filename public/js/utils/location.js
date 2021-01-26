@@ -1,3 +1,7 @@
+function getMapUrl(lat, long){
+    return `https://google.com/maps?q=${lat},${long}`
+}
+
 export function fetchLocation(){
     return new Promise((resolve, reject) =>{
         if(!navigator.geolocation){
@@ -6,7 +10,7 @@ export function fetchLocation(){
         navigator.geolocation.getCurrentPosition((position) =>{
             resolve({
                 lat: position.coords.latitude,
-                lang: position.coords.longitude
+                lng: position.coords.longitude
             })
         })
     })

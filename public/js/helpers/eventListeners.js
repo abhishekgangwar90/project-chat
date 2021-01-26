@@ -1,5 +1,5 @@
 import { sendMessage } from './../utils/socket.js';
-import {fetchLocation} from './../utils/location.js'
+import { fetchLocation } from './../utils/location.js'
 
 
 function handleMessageBotEvents(message){
@@ -7,7 +7,10 @@ function handleMessageBotEvents(message){
         case '@location':{
             fetchLocation()
             .then((res) =>{
-                sendMessage(res)
+                sendMessage({
+                    type: 'location',
+                    message: res
+                })
             }).catch((err) =>{
                 console.log('unable to fetch location')
             })
@@ -37,7 +40,10 @@ export function registerEventListeners(){
         if(botEvents.indexOf(message) !== -1){
             return handleMessageBotEvents(message)
         }
-        sendMessage(message)
+        sendMessage({
+            type: 'message',
+            message
+        })
             
     }
 
